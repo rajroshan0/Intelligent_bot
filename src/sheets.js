@@ -1,46 +1,18 @@
-// import { GoogleSpreadsheet } from "google-spreadsheet";
-// import fs from "fs";
-
-// const creds = JSON.parse(
-//   fs.readFileSync("credentials/service-account.json", "utf8")
-// );
-
-// export async function getSheet() {
-//   const doc = new GoogleSpreadsheet(process.env.SHEET_ID);
-
-//   await doc.useServiceAccountAuth(creds);
-//   await doc.loadInfo();
-
-//   const sheet = doc.sheetsByTitle["testA"]; // worksheet name
-//   return sheet;
-// }
-
-// export async function appendRow(data) {
-//   const sheet = await getSheet();
-//   await sheet.addRow(data);
-// }
-
-// export async function readRows() {
-//   const sheet = await getSheet();
-//   const rows = await sheet.getRows();
-//   return rows;
-// }
-
 
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { JWT } from "google-auth-library";
 import fs from "fs";
 
-console.log("📂 Loading service account credentials...");
+console.log(" Loading service account credentials...");
 
 const creds = JSON.parse(
   fs.readFileSync("credentials/service-account.json", "utf8")
 );
 
-console.log("✅ Credentials loaded");
-console.log("📧 Service account email:", creds.client_email);
+console.log(" Credentials loaded");
+console.log("Service account email:", creds.client_email);
 
-// ✅ NEW AUTH METHOD
+// NEW AUTH METHOD
 const auth = new JWT({
   email: creds.client_email,
   key: creds.private_key,
@@ -53,19 +25,19 @@ export async function getSheet() {
   const doc = new GoogleSpreadsheet(process.env.SHEET_ID, auth);
 
   await doc.loadInfo();
-  console.log("📄 Spreadsheet title:", doc.title);
+  console.log("Spreadsheet title:", doc.title);
 
   const sheet = doc.sheetsByTitle["testA"];
   if (!sheet) {
-    throw new Error("❌ Sheet 'testA' not found");
+    throw new Error(" Sheet 'testA' not found");
   }
 
-  console.log("📑 Worksheet found:", sheet.title);
+  console.log(" Worksheet found:", sheet.title);
   return sheet;
 }
 
 export async function appendRow(data) {
-  console.log("✍️ Appending row:", data);
+  console.log(" Appending row:", data);
 
   const sheet = await getSheet();
 
@@ -76,15 +48,15 @@ export async function appendRow(data) {
   }
 
   await sheet.addRow(data);
-  console.log("✅ Row appended successfully");
+  console.log(" Row appended successfully");
 }
 
 export async function readRows() {
-  console.log("📖 Reading rows...");
+  console.log("Reading rows...");
 
   const sheet = await getSheet();
   const rows = await sheet.getRows();
 
-  console.log("📊 Total rows:", rows.length);
+  console.log("Total rows:", rows.length);
   return rows;
 }

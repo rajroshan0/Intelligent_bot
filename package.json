@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apify-client": "^2.21.0",
     "dotenv": "^17.2.3",
     "google-auth-library": "^10.5.0",
     "google-spreadsheet": "^5.0.2",
